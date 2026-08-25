@@ -1,26 +1,74 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --background: #fbfaf7;
+  --foreground: #16241c;
+
+  /* Primary — forest green scale */
+  --color-primary-50: #f1f7f3;
+  --color-primary-100: #dcebe0;
+  --color-primary-200: #b9d7c2;
+  --color-primary-300: #8fbd9d;
+  --color-primary-400: #5e9d76;
+  --color-primary-500: #3d7f57;
+  --color-primary-600: #2c6544;
+  --color-primary-700: #235238;
+  --color-primary-800: #1c4130;
+  --color-primary-900: #173527;
+  --color-primary-950: #0b1e15;
+
+  /* Accent — warm gold, used sparingly for premium/trust cues */
+  --color-accent-50: #fbf6ea;
+  --color-accent-100: #f4e7c4;
+  --color-accent-200: #eacf8e;
+  --color-accent-300: #ddb15c;
+  --color-accent-400: #cb9a3f;
+  --color-accent-500: #b3812f;
+  --color-accent-600: #8f6526;
+  --color-accent-700: #6f4e22;
+  --color-accent-800: #593f20;
+  --color-accent-900: #48341d;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: var(--color-primary-900);
+  --color-primary-950: var(--color-primary-950);
+
+  --color-accent-50: var(--color-accent-50);
+  --color-accent-100: var(--color-accent-100);
+  --color-accent-200: var(--color-accent-200);
+  --color-accent-300: var(--color-accent-300);
+  --color-accent-400: var(--color-accent-400);
+  --color-accent-500: var(--color-accent-500);
+  --color-accent-600: var(--color-accent-600);
+  --color-accent-700: var(--color-accent-700);
+  --color-accent-800: var(--color-accent-800);
+  --color-accent-900: var(--color-accent-900);
+
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-fraunces);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: var(--color-primary-200);
+  color: var(--color-primary-900);
 }
