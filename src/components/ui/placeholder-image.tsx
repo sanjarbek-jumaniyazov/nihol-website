@@ -51,9 +51,11 @@ export function PlaceholderImage({
           priority={priority}
           className="object-cover"
         />
-        <span className="absolute bottom-1.5 right-1.5 rounded bg-black/45 px-1.5 py-0.5 text-[10px] leading-none text-white/90">
-          📷 {photo.credit.author}
-        </span>
+        {photo.credit && (
+          <span className="absolute bottom-1.5 right-1.5 rounded bg-black/45 px-1.5 py-0.5 text-[10px] leading-none text-white/90">
+            📷 {photo.credit.author}
+          </span>
+        )}
         {label && <span className="sr-only">{label}</span>}
       </div>
     );

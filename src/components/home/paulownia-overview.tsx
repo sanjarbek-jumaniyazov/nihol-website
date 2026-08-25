@@ -26,7 +26,7 @@ export function PaulowniaOverview() {
           <PlaceholderImage
             seed="paulownia-home"
             emoji="🌱"
-            photo={IMAGES.paulowniaFlowers}
+            photo={IMAGES.paulowniaNursery}
             className="aspect-[4/3] w-full transition-transform group-hover:scale-[1.01]"
             sizes="(max-width: 1024px) 100vw, 50vw"
           />

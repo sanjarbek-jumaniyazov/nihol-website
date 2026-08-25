@@ -32,7 +32,7 @@ export function PaulowniaHero() {
         <PlaceholderImage
           seed="paulownia-hero"
           emoji="🌳"
-          photo={IMAGES.paulowniaFlowers}
+          photo={IMAGES.paulowniaNursery}
           className="aspect-[4/3] w-full"
           sizes="(max-width: 1024px) 100vw, 50vw"
           priority

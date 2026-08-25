@@ -34,7 +34,7 @@ export function Hero() {
             <PlaceholderImage
               seed="hero-1"
               emoji="🌳"
-              photo={IMAGES.paulowniaSeedling}
+              photo={IMAGES.paulowniaNursery}
               className="aspect-square"
               priority
             />

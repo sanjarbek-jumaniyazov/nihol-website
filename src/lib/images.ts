@@ -18,14 +18,20 @@ export interface PhotoCredit {
 export interface PhotoSource {
   src: string;
   alt: string;
-  credit: PhotoCredit;
+  /** Omitted for locally-owned photos (e.g. the site's own nursery photography) — no attribution needed. */
+  credit?: PhotoCredit;
 }
 
 function photo(filename: string, alt: string, author: string, license: string): PhotoSource {
   return { src: wm(filename), alt, credit: { author, license, sourceFile: filename } };
 }
 
-export const IMAGES = {
+export const IMAGES: Record<string, PhotoSource> = {
+  /** Own photography, provided directly — a Nihol nursery of young Paulownia seedlings. */
+  paulowniaNursery: {
+    src: "/images/paulownia-nursery.jpg",
+    alt: "Rows of young Paulownia seedlings at the nursery",
+  },
   paulowniaFlowers: photo(
     "Paulownia-tomentosa.JPG",
     "Paulownia tomentosa tree in bloom with purple flowers",
@@ -149,4 +155,6 @@ export const FARM_IMAGES: Record<string, PhotoSource> = {
   "greenhouse-collective": IMAGES.greenhouse,
 };
 
-export const ALL_CREDITS: PhotoCredit[] = Object.values(IMAGES).map((p) => p.credit);
+export const ALL_CREDITS: PhotoCredit[] = Object.values(IMAGES)
+  .map((p) => p.credit)
+  .filter((c): c is PhotoCredit => c !== undefined);
