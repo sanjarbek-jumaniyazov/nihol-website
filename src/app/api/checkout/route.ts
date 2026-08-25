@@ -77,13 +77,31 @@ export async function POST(request: Request) {
     if (itemsError) {
       return NextResponse.json({ error: "Failed to save order items." }, { status: 500 });
     }
-  } else {
-    console.info("[checkout] Supabase not configured — order not persisted.", {
+
+    const payment = await processPayment(orderId, total);
+
+    await supabase
+      .from("orders")
+      .update({
+        payment_status: payment.success ? "paid" : "failed",
+        payment_provider: "stub",
+        payment_reference: payment.reference,
+      })
+      .eq("id", orderId);
+
+    return NextResponse.json({
       orderId,
-      customer: body.customer,
       total,
+      paymentReference: payment.reference,
+      persisted: true,
     });
   }
+
+  console.info("[checkout] Supabase not configured — order not persisted.", {
+    orderId,
+    customer: body.customer,
+    total,
+  });
 
   const payment = await processPayment(orderId, total);
 
@@ -91,6 +109,6 @@ export async function POST(request: Request) {
     orderId,
     total,
     paymentReference: payment.reference,
-    persisted: isSupabaseConfigured,
+    persisted: false,
   });
 }

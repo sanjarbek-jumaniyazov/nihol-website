@@ -64,6 +64,7 @@ create table if not exists orders (
     payment_status in ('pending', 'paid', 'failed', 'refunded')
   ),
   payment_provider text,
+  payment_reference text,
   created_at timestamptz default now()
 );
 
