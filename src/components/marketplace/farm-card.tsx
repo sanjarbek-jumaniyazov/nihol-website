@@ -2,6 +2,7 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
 import { StarRating } from "@/components/ui/star-rating";
+import { FARM_IMAGES } from "@/lib/images";
 import type { Farm } from "@/lib/types";
 
 export function FarmCard({ farm }: { farm: Farm }) {
@@ -10,7 +11,12 @@ export function FarmCard({ farm }: { farm: Farm }) {
       href={`/marketplace/farms/${farm.slug}`}
       className="group block overflow-hidden rounded-2xl border border-primary-100 bg-white transition-shadow hover:shadow-lg"
     >
-      <PlaceholderImage seed={farm.id} emoji="🏡" className="aspect-[16/9] w-full rounded-none" />
+      <PlaceholderImage
+        seed={farm.id}
+        emoji="🏡"
+        photo={FARM_IMAGES[farm.slug]}
+        className="aspect-[16/9] w-full rounded-none"
+      />
       <div className="p-5">
         <h3 className="font-serif text-lg font-semibold text-primary-950 group-hover:text-primary-700">
           {farm.name}

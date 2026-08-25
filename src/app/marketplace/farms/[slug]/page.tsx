@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/container";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
 import { StarRating } from "@/components/ui/star-rating";
 import { ProductCard } from "@/components/marketplace/product-card";
+import { FARM_IMAGES } from "@/lib/images";
 import { getFarmBySlug, getFarms, getProductsByFarm } from "@/lib/data";
 
 export async function generateStaticParams() {
@@ -34,7 +35,14 @@ export default async function FarmPage({ params }: { params: Promise<{ slug: str
     <>
       <section className="bg-gradient-to-b from-primary-50 to-background py-14">
         <Container className="grid grid-cols-1 items-center gap-10 lg:grid-cols-3">
-          <PlaceholderImage seed={farm.id} emoji="🏡" className="aspect-[4/3] w-full lg:col-span-1" />
+          <PlaceholderImage
+            seed={farm.id}
+            emoji="🏡"
+            photo={FARM_IMAGES[farm.slug]}
+            className="aspect-[4/3] w-full lg:col-span-1"
+            sizes="(max-width: 1024px) 100vw, 33vw"
+            priority
+          />
           <div className="lg:col-span-2">
             <h1 className="font-serif text-3xl font-semibold text-primary-950 sm:text-4xl">{farm.name}</h1>
             <p className="mt-2 text-lg text-primary-800/80">{farm.tagline}</p>

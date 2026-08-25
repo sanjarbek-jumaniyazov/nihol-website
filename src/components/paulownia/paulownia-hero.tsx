@@ -1,6 +1,7 @@
 import { LinkButton } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
+import { IMAGES } from "@/lib/images";
 import { formatSom } from "@/lib/utils";
 
 export function PaulowniaHero() {
@@ -28,7 +29,14 @@ export function PaulowniaHero() {
             </LinkButton>
           </div>
         </div>
-        <PlaceholderImage seed="paulownia-hero" emoji="🌳" className="aspect-[4/3] w-full" />
+        <PlaceholderImage
+          seed="paulownia-hero"
+          emoji="🌳"
+          photo={IMAGES.paulowniaFlowers}
+          className="aspect-[4/3] w-full"
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          priority
+        />
       </Container>
     </section>
   );

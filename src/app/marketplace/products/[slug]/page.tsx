@@ -7,6 +7,7 @@ import { StarRating } from "@/components/ui/star-rating";
 import { ProductCard } from "@/components/marketplace/product-card";
 import { AddToCartButton } from "@/components/marketplace/add-to-cart-button";
 import { PRODUCT_CATEGORIES } from "@/lib/types";
+import { PRODUCT_IMAGES, FARM_IMAGES } from "@/lib/images";
 import { formatSom } from "@/lib/utils";
 import { getFarmById, getProductBySlug, getProducts, getRelatedProducts } from "@/lib/data";
 
@@ -41,7 +42,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   return (
     <Container className="py-14">
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-        <PlaceholderImage seed={product.id} emoji={category?.emoji ?? "🌿"} className="aspect-square w-full" />
+        <PlaceholderImage
+          seed={product.id}
+          emoji={category?.emoji ?? "🌿"}
+          photo={PRODUCT_IMAGES[product.slug]}
+          className="aspect-square w-full"
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          priority
+        />
 
         <div>
           <p className="text-sm font-medium uppercase tracking-wide text-primary-600">{category?.label}</p>
@@ -73,7 +81,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               href={`/marketplace/farms/${productFarm.slug}`}
               className="mt-8 flex items-center gap-3 rounded-xl border border-primary-100 p-4 transition-colors hover:bg-primary-50"
             >
-              <PlaceholderImage seed={productFarm.id} emoji="🏡" className="h-12 w-12 flex-shrink-0" />
+              <PlaceholderImage
+                seed={productFarm.id}
+                emoji="🏡"
+                photo={FARM_IMAGES[productFarm.slug]}
+                className="h-12 w-12 flex-shrink-0"
+                sizes="48px"
+              />
               <div>
                 <p className="text-xs text-primary-800/60">Sold by</p>
                 <p className="font-medium text-primary-950">{productFarm.name}</p>

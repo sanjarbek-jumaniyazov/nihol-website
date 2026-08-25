@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/container";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
 import { LinkButton } from "@/components/ui/button";
 import { PRODUCT_CATEGORIES } from "@/lib/types";
+import { PRODUCT_IMAGES } from "@/lib/images";
 import { formatSom } from "@/lib/utils";
 import { products } from "@/lib/mock-data";
 import { useCartStore } from "@/store/cart";
@@ -57,7 +58,9 @@ export default function CartPage() {
                 <PlaceholderImage
                   seed={product.id}
                   emoji={category?.emoji ?? "🌿"}
+                  photo={PRODUCT_IMAGES[product.slug]}
                   className="h-20 w-20 flex-shrink-0"
+                  sizes="80px"
                 />
                 <div className="flex-1">
                   <Link

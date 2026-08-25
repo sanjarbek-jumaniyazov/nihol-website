@@ -2,6 +2,7 @@ import Link from "next/link";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
 import { StarRating } from "@/components/ui/star-rating";
 import { PRODUCT_CATEGORIES } from "@/lib/types";
+import { PRODUCT_IMAGES } from "@/lib/images";
 import { formatSom } from "@/lib/utils";
 import type { Product } from "@/lib/types";
 
@@ -17,6 +18,7 @@ export function ProductCard({ product }: { product: Product }) {
         <PlaceholderImage
           seed={product.id}
           emoji={category?.emoji ?? "🌿"}
+          photo={PRODUCT_IMAGES[product.slug]}
           className="aspect-square w-full rounded-none"
         />
         {!product.inStock && (

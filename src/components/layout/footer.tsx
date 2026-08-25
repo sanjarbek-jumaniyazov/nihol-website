@@ -49,7 +49,10 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-primary-900 px-4 py-6 text-center text-xs text-primary-300 sm:px-6 lg:px-8">
-        © {new Date().getFullYear()} Nihol. All rights reserved. Placeholder contact details — replace with real company info.
+        © {new Date().getFullYear()} Nihol. All rights reserved. Placeholder contact details — replace with real company info.{" "}
+        <Link href="/credits" className="underline hover:text-white">
+          Photo credits
+        </Link>
       </div>
     </footer>
   );

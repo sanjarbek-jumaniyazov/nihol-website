@@ -1,8 +1,10 @@
+import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
 import { LinkButton } from "@/components/ui/button";
+import { IMAGES } from "@/lib/images";
 import { formatSom } from "@/lib/utils";
 
 const HIGHLIGHTS = [
@@ -16,7 +18,19 @@ export function PaulowniaOverview() {
   return (
     <section className="py-16 sm:py-24">
       <Container className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-        <PlaceholderImage seed="paulownia-home" emoji="🌱" className="aspect-[4/3] w-full" />
+        <Link
+          href="/paulownia"
+          aria-label="See full Paulownia investment details"
+          className="group block"
+        >
+          <PlaceholderImage
+            seed="paulownia-home"
+            emoji="🌱"
+            photo={IMAGES.paulowniaFlowers}
+            className="aspect-[4/3] w-full transition-transform group-hover:scale-[1.01]"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+        </Link>
 
         <div>
           <SectionHeading

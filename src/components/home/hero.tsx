@@ -1,6 +1,8 @@
+import Link from "next/link";
 import { LinkButton } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
+import { IMAGES } from "@/lib/images";
 
 export function Hero() {
   return (
@@ -28,10 +30,24 @@ export function Hero() {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <PlaceholderImage seed="hero-1" emoji="🌳" className="aspect-square" />
-          <PlaceholderImage seed="hero-2" emoji="🌸" className="mt-8 aspect-square" />
-          <PlaceholderImage seed="hero-3" emoji="🍎" className="aspect-square" />
-          <PlaceholderImage seed="hero-4" emoji="🪴" className="mt-8 aspect-square" />
+          <Link href="/paulownia" aria-label="Paulownia investment" className="block">
+            <PlaceholderImage
+              seed="hero-1"
+              emoji="🌳"
+              photo={IMAGES.paulowniaSeedling}
+              className="aspect-square"
+              priority
+            />
+          </Link>
+          <Link href="/marketplace" aria-label="Shop flowers" className="mt-8 block">
+            <PlaceholderImage seed="hero-2" emoji="🌸" photo={IMAGES.roses} className="aspect-square" priority />
+          </Link>
+          <Link href="/marketplace" aria-label="Shop fruit trees" className="block">
+            <PlaceholderImage seed="hero-3" emoji="🍎" photo={IMAGES.appleTree} className="aspect-square" />
+          </Link>
+          <Link href="/marketplace" aria-label="Shop indoor plants" className="mt-8 block">
+            <PlaceholderImage seed="hero-4" emoji="🪴" photo={IMAGES.monstera} className="aspect-square" />
+          </Link>
         </div>
       </Container>
     </section>

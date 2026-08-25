@@ -1,4 +1,6 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
+import type { PhotoSource } from "@/lib/images";
 
 const PALETTES = [
   "from-primary-200 via-primary-300 to-primary-500",
@@ -18,10 +20,45 @@ interface PlaceholderImageProps {
   emoji: string;
   label?: string;
   className?: string;
+  /** Real photo to render instead of the gradient+emoji stand-in. */
+  photo?: PhotoSource;
+  priority?: boolean;
+  sizes?: string;
 }
 
-/** Gradient + emoji stand-in used everywhere real product/farm photography will go. */
-export function PlaceholderImage({ seed, emoji, label, className }: PlaceholderImageProps) {
+/**
+ * Renders a real photo (with a small attribution caption, as its license
+ * requires) when `photo` is supplied. Otherwise falls back to a gradient +
+ * emoji stand-in for anything without curated real photography yet.
+ */
+export function PlaceholderImage({
+  seed,
+  emoji,
+  label,
+  className,
+  photo,
+  priority,
+  sizes = "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw",
+}: PlaceholderImageProps) {
+  if (photo) {
+    return (
+      <div className={cn("relative overflow-hidden rounded-2xl bg-primary-100", className)}>
+        <Image
+          src={photo.src}
+          alt={photo.alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className="object-cover"
+        />
+        <span className="absolute bottom-1.5 right-1.5 rounded bg-black/45 px-1.5 py-0.5 text-[10px] leading-none text-white/90">
+          📷 {photo.credit.author}
+        </span>
+        {label && <span className="sr-only">{label}</span>}
+      </div>
+    );
+  }
+
   return (
     <div
       className={cn(

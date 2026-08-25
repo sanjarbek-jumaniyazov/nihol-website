@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
 import { CtaBanner } from "@/components/shared/cta-banner";
+import { IMAGES } from "@/lib/images";
 import { getTrustStats } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -70,7 +71,13 @@ export default async function AboutPage() {
               partners.
             </p>
           </div>
-          <PlaceholderImage seed="about-hero" emoji="🌾" className="aspect-[4/3] w-full" />
+          <PlaceholderImage
+            seed="about-hero"
+            emoji="🌾"
+            photo={IMAGES.orchard}
+            className="aspect-[4/3] w-full"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
         </Container>
       </section>
 
