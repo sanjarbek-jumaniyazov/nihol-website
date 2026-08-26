@@ -1,14 +1,16 @@
 import { Container } from "@/components/ui/container";
 import { getTrustStats } from "@/lib/data";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-export async function TrustStats() {
+export async function TrustStats({ dict }: { dict: Dictionary }) {
   const stats = await getTrustStats();
+  const t = dict.home.trustStats;
 
   const items = [
-    { label: "Years in Business", value: `${stats.yearsInBusiness}+` },
-    { label: "Trees Planted", value: stats.treesPlanted.toLocaleString() },
-    { label: "Happy Customers", value: stats.customers.toLocaleString() },
-    { label: "Partner Farm Brands", value: `${stats.farmPartners}+` },
+    { label: t.yearsInBusiness, value: `${stats.yearsInBusiness}+` },
+    { label: t.treesPlanted, value: stats.treesPlanted.toLocaleString() },
+    { label: t.happyCustomers, value: stats.customers.toLocaleString() },
+    { label: t.partnerFarmBrands, value: `${stats.farmPartners}+` },
   ];
 
   return (

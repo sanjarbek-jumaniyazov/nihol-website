@@ -1,3 +1,8 @@
+import type { Locale } from "@/i18n/config";
+
+/** A string translated into every supported locale. */
+export type Localized = Record<Locale, string>;
+
 export type ProductCategory =
   | "flowers"
   | "decorative-trees"
@@ -5,12 +10,12 @@ export type ProductCategory =
   | "indoor-plants"
   | "supplies";
 
-export const PRODUCT_CATEGORIES: { value: ProductCategory; label: string; emoji: string }[] = [
-  { value: "flowers", label: "Flowering Plants", emoji: "🌸" },
-  { value: "decorative-trees", label: "Decorative Trees", emoji: "🌳" },
-  { value: "fruit-trees", label: "Fruit Trees", emoji: "🍎" },
-  { value: "indoor-plants", label: "Indoor Plants & Greenery", emoji: "🌿" },
-  { value: "supplies", label: "Pots, Seeds & Supplies", emoji: "🪴" },
+export const PRODUCT_CATEGORIES: { value: ProductCategory; emoji: string }[] = [
+  { value: "flowers", emoji: "🌸" },
+  { value: "decorative-trees", emoji: "🌳" },
+  { value: "fruit-trees", emoji: "🍎" },
+  { value: "indoor-plants", emoji: "🌿" },
+  { value: "supplies", emoji: "🪴" },
 ];
 
 export interface Farm {
@@ -27,6 +32,13 @@ export interface Farm {
   accentColor: string;
 }
 
+export interface RawFarm extends Omit<Farm, "name" | "tagline" | "description" | "location"> {
+  name: Localized;
+  tagline: Localized;
+  description: Localized;
+  location: Localized;
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -41,6 +53,12 @@ export interface Product {
   reviewCount: number;
 }
 
+export interface RawProduct extends Omit<Product, "name" | "description" | "careInstructions"> {
+  name: Localized;
+  description: Localized;
+  careInstructions: Localized;
+}
+
 export interface Testimonial {
   id: string;
   name: string;
@@ -49,9 +67,19 @@ export interface Testimonial {
   treesOwned?: number;
 }
 
+export interface RawTestimonial extends Omit<Testimonial, "role" | "quote"> {
+  role: Localized;
+  quote: Localized;
+}
+
 export interface FaqItem {
   question: string;
   answer: string;
+}
+
+export interface RawFaqItem {
+  question: Localized;
+  answer: Localized;
 }
 
 export interface CartLine {

@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { NextResponse } from "next/server";
 import { getProducts } from "@/lib/data";
+import { defaultLocale } from "@/i18n/config";
 import { processPayment } from "@/lib/payment";
 import { isSupabaseConfigured, createClient } from "@/lib/supabase/server";
 import type { CartLine } from "@/lib/types";
@@ -26,7 +27,8 @@ export async function POST(request: Request) {
   }
 
   // Prices are always resolved server-side from the catalog, never trusted from the client.
-  const allProducts = await getProducts();
+  // Locale only affects display text here, not price, so any locale works.
+  const allProducts = await getProducts(defaultLocale);
   const priceByProductId = new Map(allProducts.map((p) => [p.id, p]));
 
   const resolvedLines = body.lines

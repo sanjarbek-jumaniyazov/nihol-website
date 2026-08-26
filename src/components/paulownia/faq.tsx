@@ -7,13 +7,19 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { cn } from "@/lib/utils";
 import type { FaqItem } from "@/lib/types";
 
-export function Faq({ items }: { items: FaqItem[] }) {
+export function Faq({
+  items,
+  dict,
+}: {
+  items: FaqItem[];
+  dict: { eyebrow: string; title: string };
+}) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
     <section id="faq" className="bg-primary-50/60 py-16 sm:py-24">
       <Container>
-        <SectionHeading eyebrow="FAQ" title="Common questions" align="center" />
+        <SectionHeading eyebrow={dict.eyebrow} title={dict.title} align="center" />
 
         <div className="mx-auto mt-10 max-w-3xl divide-y divide-primary-200 rounded-2xl border border-primary-100 bg-white">
           {items.map((item, i) => {

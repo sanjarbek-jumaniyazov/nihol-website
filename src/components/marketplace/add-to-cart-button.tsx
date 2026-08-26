@@ -4,10 +4,13 @@ import { useState } from "react";
 import { Check, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cart";
+import { useLocale } from "@/i18n/locale-context";
+import { getDictionary } from "@/i18n/dictionaries";
 
 export function AddToCartButton({ productId, inStock }: { productId: string; inStock: boolean }) {
   const addItem = useCartStore((s) => s.addItem);
   const [added, setAdded] = useState(false);
+  const dict = getDictionary(useLocale()).marketplace;
 
   function handleClick() {
     addItem(productId, 1);
@@ -19,11 +22,11 @@ export function AddToCartButton({ productId, inStock }: { productId: string; inS
     <Button size="lg" disabled={!inStock} onClick={handleClick} className="w-full sm:w-auto">
       {added ? (
         <>
-          <Check className="h-5 w-5" /> Added to Cart
+          <Check className="h-5 w-5" /> {dict.addedToCart}
         </>
       ) : (
         <>
-          <ShoppingCart className="h-5 w-5" /> {inStock ? "Add to Cart" : "Out of Stock"}
+          <ShoppingCart className="h-5 w-5" /> {inStock ? dict.addToCart : dict.outOfStock}
         </>
       )}
     </Button>

@@ -8,10 +8,21 @@ import { ProductCard } from "@/components/marketplace/product-card";
 import { PRODUCT_CATEGORIES } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import type { Product, ProductCategory } from "@/lib/types";
+import type { Dictionary } from "@/i18n/dictionaries";
+import type { Locale } from "@/i18n/config";
 
-export function ProductBrowser({ products }: { products: Product[] }) {
+export function ProductBrowser({
+  products,
+  dict,
+  lang,
+}: {
+  products: Product[];
+  dict: Dictionary["marketplace"];
+  lang: Locale;
+}) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<ProductCategory | "all">("all");
+  const t = dict.browser;
 
   const filtered = useMemo(() => {
     return products.filter((p) => {
@@ -26,7 +37,7 @@ export function ProductBrowser({ products }: { products: Product[] }) {
   return (
     <section id="products" className="py-16">
       <Container>
-        <SectionHeading eyebrow="Shop" title="All products" />
+        <SectionHeading eyebrow={t.eyebrow} title={t.title} />
 
         <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="relative w-full sm:max-w-xs">
@@ -34,7 +45,7 @@ export function ProductBrowser({ products }: { products: Product[] }) {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search products…"
+              placeholder={t.searchPlaceholder}
               className="w-full rounded-full border border-primary-200 py-2.5 pl-10 pr-4 text-sm focus:border-primary-500 focus:outline-none"
             />
           </div>
@@ -47,7 +58,7 @@ export function ProductBrowser({ products }: { products: Product[] }) {
                 category === "all" ? "bg-primary-700 text-white" : "bg-primary-50 text-primary-800 hover:bg-primary-100"
               )}
             >
-              All
+              {t.all}
             </button>
             {PRODUCT_CATEGORIES.map((c) => (
               <button
@@ -60,18 +71,18 @@ export function ProductBrowser({ products }: { products: Product[] }) {
                     : "bg-primary-50 text-primary-800 hover:bg-primary-100"
                 )}
               >
-                {c.emoji} {c.label}
+                {c.emoji} {dict.categories[c.value]}
               </button>
             ))}
           </div>
         </div>
 
         {filtered.length === 0 ? (
-          <p className="mt-12 text-center text-primary-800/60">No products match your search.</p>
+          <p className="mt-12 text-center text-primary-800/60">{t.noResults}</p>
         ) : (
           <div className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
             {filtered.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} dict={dict} lang={lang} />
             ))}
           </div>
         )}

@@ -4,27 +4,27 @@ import { LinkButton } from "@/components/ui/button";
 import { ProductCard } from "@/components/marketplace/product-card";
 import { FarmCard } from "@/components/marketplace/farm-card";
 import { getFeaturedFarms, getProducts } from "@/lib/data";
+import type { Dictionary } from "@/i18n/dictionaries";
+import type { Locale } from "@/i18n/config";
 
-export async function MarketplaceHighlights() {
-  const [farms, products] = await Promise.all([getFeaturedFarms(), getProducts()]);
+export async function MarketplaceHighlights({ lang, dict }: { lang: Locale; dict: Dictionary }) {
+  const [farms, products] = await Promise.all([getFeaturedFarms(lang), getProducts(lang)]);
+  const t = dict.marketplace;
+  const th = dict.home.marketplaceHighlights;
 
   return (
     <section className="bg-primary-50/60 py-16 sm:py-24">
       <Container>
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-          <SectionHeading
-            eyebrow="Plant Marketplace"
-            title="Supporting local farms. Delivering green to your home."
-            description="Browse flowers, decorative trees, fruit trees, and ornamental plants from vetted, independent farm brands."
-          />
+          <SectionHeading eyebrow={th.eyebrow} title={th.title} description={th.description} />
           <LinkButton href="/marketplace" variant="outline">
-            Browse Marketplace
+            {th.browseMarketplace}
           </LinkButton>
         </div>
 
         <div className="mt-12">
           <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-primary-600">
-            Featured Farm Brands
+            {th.featuredFarmBrands}
           </h3>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {farms.slice(0, 3).map((farm) => (
@@ -35,11 +35,11 @@ export async function MarketplaceHighlights() {
 
         <div className="mt-12">
           <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-primary-600">
-            Popular Products
+            {th.popularProducts}
           </h3>
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
             {products.slice(0, 4).map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} dict={t} lang={lang} />
             ))}
           </div>
         </div>

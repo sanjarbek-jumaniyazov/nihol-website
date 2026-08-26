@@ -1,20 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { Menu, X, Leaf } from "lucide-react";
+import { Link } from "@/components/ui/localized-link";
 import { CartBadge } from "./cart-badge";
+import { LanguageSwitcher } from "./language-switcher";
 import { LinkButton } from "@/components/ui/button";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-const NAV_LINKS = [
-  { href: "/paulownia", label: "Paulownia Investment" },
-  { href: "/marketplace", label: "Marketplace" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-];
-
-export default function Header() {
+export default function Header({ dict }: { dict: Dictionary }) {
   const [open, setOpen] = useState(false);
+
+  const NAV_LINKS = [
+    { href: "/paulownia", label: dict.nav.paulownia },
+    { href: "/marketplace", label: dict.nav.marketplace },
+    { href: "/about", label: dict.nav.about },
+    { href: "/contact", label: dict.nav.contact },
+  ];
 
   return (
     <header className="sticky top-0 z-50 border-b border-primary-100 bg-background/90 backdrop-blur">
@@ -37,20 +39,22 @@ export default function Header() {
         </nav>
 
         <div className="hidden items-center gap-4 md:flex">
-          <Link href="/cart" aria-label="View cart" className="text-primary-900 hover:text-primary-700">
+          <LanguageSwitcher />
+          <Link href="/cart" aria-label={dict.nav.viewCart} className="text-primary-900 hover:text-primary-700">
             <CartBadge />
           </Link>
           <LinkButton href="/paulownia" size="sm">
-            Invest Now
+            {dict.nav.investNow}
           </LinkButton>
         </div>
 
         <div className="flex items-center gap-4 md:hidden">
-          <Link href="/cart" aria-label="View cart" className="text-primary-900">
+          <LanguageSwitcher />
+          <Link href="/cart" aria-label={dict.nav.viewCart} className="text-primary-900">
             <CartBadge />
           </Link>
           <button
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={open ? dict.nav.closeMenu : dict.nav.openMenu}
             onClick={() => setOpen((o) => !o)}
             className="text-primary-900"
           >

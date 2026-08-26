@@ -1,23 +1,22 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { isAdminEmail } from "@/lib/admin";
+import type { Locale } from "@/i18n/config";
 
 const SUPABASE_CONFIGURED = Boolean(
   process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
-/** Refreshes the Supabase session cookie and gates /admin routes to logged-in admin emails. */
-export async function updateSession(request: NextRequest) {
+/** Refreshes the Supabase session cookie and gates /admin routes to logged-in admin emails. Called only for locale-prefixed paths whose remainder starts with /admin. */
+export async function updateSession(request: NextRequest, locale: Locale) {
   let response = NextResponse.next({ request });
 
-  const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
-  const isLoginRoute = request.nextUrl.pathname === "/admin/login";
-
-  if (!isAdminRoute) return response;
+  const loginPath = `/${locale}/admin/login`;
+  const isLoginRoute = request.nextUrl.pathname === loginPath;
 
   if (!SUPABASE_CONFIGURED) {
     if (isLoginRoute) return response;
-    return NextResponse.redirect(new URL("/admin/login", request.url));
+    return NextResponse.redirect(new URL(loginPath, request.url));
   }
 
   const supabase = createServerClient(
@@ -46,10 +45,10 @@ export async function updateSession(request: NextRequest) {
   const authorized = isAdminEmail(user?.email);
 
   if (!authorized && !isLoginRoute) {
-    return NextResponse.redirect(new URL("/admin/login", request.url));
+    return NextResponse.redirect(new URL(loginPath, request.url));
   }
   if (authorized && isLoginRoute) {
-    return NextResponse.redirect(new URL("/admin", request.url));
+    return NextResponse.redirect(new URL(`/${locale}/admin`, request.url));
   }
 
   return response;

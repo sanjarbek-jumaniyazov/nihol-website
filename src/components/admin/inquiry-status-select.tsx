@@ -2,10 +2,19 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-const STATUSES = ["new", "contacted", "converted", "closed"];
+const STATUSES = ["new", "contacted", "converted", "closed"] as const;
 
-export function InquiryStatusSelect({ id, status }: { id: string; status: string }) {
+export function InquiryStatusSelect({
+  id,
+  status,
+  dict,
+}: {
+  id: string;
+  status: string;
+  dict: Dictionary["admin"]["statusLabels"];
+}) {
   const router = useRouter();
   const [value, setValue] = useState(status);
   const [saving, setSaving] = useState(false);
@@ -32,7 +41,7 @@ export function InquiryStatusSelect({ id, status }: { id: string; status: string
     >
       {STATUSES.map((s) => (
         <option key={s} value={s}>
-          {s[0].toUpperCase() + s.slice(1)}
+          {dict[s]}
         </option>
       ))}
     </select>

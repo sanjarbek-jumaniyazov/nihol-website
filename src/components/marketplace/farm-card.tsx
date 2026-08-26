@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/components/ui/localized-link";
 import { MapPin } from "lucide-react";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
 import { StarRating } from "@/components/ui/star-rating";

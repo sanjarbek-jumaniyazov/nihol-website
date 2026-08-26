@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -9,21 +9,28 @@ import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Button } from "@/components/ui/button";
 import { formatSom } from "@/lib/utils";
+import type { Dictionary } from "@/i18n/dictionaries";
+import type { Locale } from "@/i18n/config";
 
-const schema = z.object({
-  fullName: z.string().min(2, "Enter your full name"),
-  email: z.string().email("Enter a valid email"),
-  phone: z.string().optional(),
-  treeCount: z.number().int().min(1, "At least 1 tree"),
-  landOption: z.enum(["own-land", "partner-farm"]),
-  message: z.string().optional(),
-});
-
-type FormValues = z.infer<typeof schema>;
-
-export function InvestmentForm() {
+export function InvestmentForm({ dict, lang }: { dict: Dictionary; lang: Locale }) {
+  const t = dict.paulownia.form;
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const schema = useMemo(
+    () =>
+      z.object({
+        fullName: z.string().min(2, t.errors.fullName),
+        email: z.string().email(t.errors.email),
+        phone: z.string().optional(),
+        treeCount: z.number().int().min(1, t.errors.treeCount),
+        landOption: z.enum(["own-land", "partner-farm"]),
+        message: z.string().optional(),
+      }),
+    [t]
+  );
+
+  type FormValues = z.infer<typeof schema>;
 
   const {
     register,
@@ -48,36 +55,27 @@ export function InvestmentForm() {
       if (!res.ok) throw new Error();
       setSubmitted(true);
     } catch {
-      setSubmitError("Something went wrong. Please try again or contact us directly.");
+      setSubmitError(t.genericError);
     }
   }
 
   return (
     <section id="get-started" className="py-16 sm:py-24">
       <Container className="max-w-2xl">
-        <SectionHeading
-          eyebrow="Get Started"
-          title="Invest in your future — start with one tree"
-          align="center"
-        />
+        <SectionHeading eyebrow={t.eyebrow} title={t.title} align="center" />
 
         <div className="mt-10 rounded-2xl border border-primary-100 bg-white p-6 sm:p-8">
           {submitted ? (
             <div className="flex flex-col items-center py-8 text-center">
               <CheckCircle2 className="h-12 w-12 text-primary-600" />
-              <h3 className="mt-4 font-serif text-xl font-semibold text-primary-950">
-                Thanks — we&apos;ve received your inquiry
-              </h3>
-              <p className="mt-2 text-sm text-primary-800/70">
-                An agronomist advisor will reach out within 1–2 business days to walk you through
-                next steps.
-              </p>
+              <h3 className="mt-4 font-serif text-xl font-semibold text-primary-950">{t.thanksTitle}</h3>
+              <p className="mt-2 text-sm text-primary-800/70">{t.thanksBody}</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-primary-950">Full name</label>
+                  <label className="block text-sm font-medium text-primary-950">{t.fullName}</label>
                   <input
                     {...register("fullName")}
                     className="mt-1 w-full rounded-lg border border-primary-200 px-4 py-2.5 focus:border-primary-500 focus:outline-none"
@@ -87,7 +85,7 @@ export function InvestmentForm() {
                   )}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-primary-950">Email</label>
+                  <label className="block text-sm font-medium text-primary-950">{t.email}</label>
                   <input
                     type="email"
                     {...register("email")}
@@ -99,14 +97,14 @@ export function InvestmentForm() {
 
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-primary-950">Phone (optional)</label>
+                  <label className="block text-sm font-medium text-primary-950">{t.phoneOptional}</label>
                   <input
                     {...register("phone")}
                     className="mt-1 w-full rounded-lg border border-primary-200 px-4 py-2.5 focus:border-primary-500 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-primary-950">Number of trees</label>
+                  <label className="block text-sm font-medium text-primary-950">{t.treeCount}</label>
                   <input
                     type="number"
                     min={1}
@@ -120,18 +118,18 @@ export function InvestmentForm() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-primary-950">Planting location</label>
+                <label className="block text-sm font-medium text-primary-950">{t.plantingLocation}</label>
                 <select
                   {...register("landOption")}
                   className="mt-1 w-full rounded-lg border border-primary-200 px-4 py-2.5 focus:border-primary-500 focus:outline-none"
                 >
-                  <option value="partner-farm">Plant on Nihol&apos;s partner farm</option>
-                  <option value="own-land">Plant on my own land</option>
+                  <option value="partner-farm">{t.partnerFarmOption}</option>
+                  <option value="own-land">{t.ownLandOption}</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-primary-950">Message (optional)</label>
+                <label className="block text-sm font-medium text-primary-950">{t.messageOptional}</label>
                 <textarea
                   {...register("message")}
                   rows={3}
@@ -140,19 +138,16 @@ export function InvestmentForm() {
               </div>
 
               <div className="flex items-center justify-between rounded-lg bg-primary-50 px-4 py-3 text-sm text-primary-900">
-                <span>Estimated total</span>
-                <span className="font-semibold">{formatSom(499000 * treeCount)}</span>
+                <span>{t.estimatedTotal}</span>
+                <span className="font-semibold">{formatSom(499000 * treeCount, lang)}</span>
               </div>
 
               {submitError && <p className="text-sm text-red-600">{submitError}</p>}
 
               <Button type="submit" size="lg" disabled={isSubmitting} className="w-full">
-                {isSubmitting ? "Submitting…" : "Submit Inquiry"}
+                {isSubmitting ? t.submitting : t.submit}
               </Button>
-              <p className="text-center text-xs text-primary-800/50">
-                This submits an inquiry — an advisor will contact you to complete payment and
-                planting details. No payment is collected on this form.
-              </p>
+              <p className="text-center text-xs text-primary-800/50">{t.disclaimer}</p>
             </form>
           )}
         </div>
