@@ -3,37 +3,55 @@
 :root {
   color-scheme: light;
 
-  --background: #fbfaf7;
-  --foreground: #16241c;
+  --background: #faf8f3;
+  --background-outer: #efebe1;
+  --foreground: #1c2015;
 
-  /* Primary — forest green scale */
-  --color-primary-50: #f1f7f3;
-  --color-primary-100: #dcebe0;
-  --color-primary-200: #b9d7c2;
-  --color-primary-300: #8fbd9d;
-  --color-primary-400: #5e9d76;
-  --color-primary-500: #3d7f57;
-  --color-primary-600: #2c6544;
-  --color-primary-700: #235238;
-  --color-primary-800: #1c4130;
-  --color-primary-900: #173527;
-  --color-primary-950: #0b1e15;
+  /* Primary — forest green scale, anchored on the brand greens #2D5016 / #3D6B2F */
+  --color-primary-50: #f0f5ec;
+  --color-primary-100: #dce8d2;
+  --color-primary-200: #b9d1a8;
+  --color-primary-300: #93b67d;
+  --color-primary-400: #6b9757;
+  --color-primary-500: #4f7d3d;
+  --color-primary-600: #3d6b2f;
+  --color-primary-700: #2d5016;
+  --color-primary-800: #234012;
+  --color-primary-900: #1a300e;
+  --color-primary-950: #14260a;
 
-  /* Accent — warm gold, used sparingly for premium/trust cues */
-  --color-accent-50: #fbf6ea;
-  --color-accent-100: #f4e7c4;
-  --color-accent-200: #eacf8e;
-  --color-accent-300: #ddb15c;
-  --color-accent-400: #cb9a3f;
-  --color-accent-500: #b3812f;
-  --color-accent-600: #8f6526;
-  --color-accent-700: #6f4e22;
-  --color-accent-800: #593f20;
-  --color-accent-900: #48341d;
+  /* Accent — warm tan, anchored on #D4A574 */
+  --color-accent-50: #fdf6e8;
+  --color-accent-100: #f6eee2;
+  --color-accent-200: #edd9b8;
+  --color-accent-300: #e2c295;
+  --color-accent-400: #d4a574;
+  --color-accent-500: #c08f52;
+  --color-accent-600: #a97940;
+  --color-accent-700: #8a6a3e;
+  --color-accent-800: #6b5230;
+  --color-accent-900: #4a3820;
+
+  /* Neutrals used across cards/labels */
+  --color-ink: #1c2015;
+  --color-muted: #6b7263;
+  --color-label: #8a8570;
+  --color-panel: #f2f4ec;
+  --color-panel-alt: #f5f7f0;
+  --color-hairline: rgba(45, 80, 22, 0.12);
+
+  /* Semantic status colors */
+  --color-success-50: #e8f5ee;
+  --color-success-600: #10b981;
+  --color-success-700: #0b7a5a;
+  --color-warning-50: #fdf6e8;
+  --color-warning-500: #f59e0b;
+  --color-warning-700: #7a5b12;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-outer: var(--background-outer);
   --color-foreground: var(--foreground);
 
   --color-primary-50: var(--color-primary-50);
@@ -59,8 +77,23 @@
   --color-accent-800: var(--color-accent-800);
   --color-accent-900: var(--color-accent-900);
 
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-fraunces);
+  --color-ink: var(--color-ink);
+  --color-muted: var(--color-muted);
+  --color-label: var(--color-label);
+  --color-panel: var(--color-panel);
+  --color-panel-alt: var(--color-panel-alt);
+  --color-hairline: var(--color-hairline);
+
+  --color-success-50: var(--color-success-50);
+  --color-success-600: var(--color-success-600);
+  --color-success-700: var(--color-success-700);
+  --color-warning-50: var(--color-warning-50);
+  --color-warning-500: var(--color-warning-500);
+  --color-warning-700: var(--color-warning-700);
+
+  --font-sans: var(--font-plus-jakarta-sans);
+  --font-serif: var(--font-lora);
+  --font-mono: var(--font-ibm-plex-mono);
 }
 
 body {

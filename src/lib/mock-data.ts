@@ -20,6 +20,12 @@ import type {
   RawProduct,
   RawTestimonial,
   RawFaqItem,
+  TreePackage,
+  RawTreePackage,
+  Tree,
+  TreeCareLogEntry,
+  Order,
+  ProductReview,
 } from "./types";
 
 export function localizeFarm(f: RawFarm, locale: Locale): Farm {
@@ -47,6 +53,10 @@ export function localizeTestimonial(t: RawTestimonial, locale: Locale): Testimon
 
 export function localizeFaq(f: RawFaqItem, locale: Locale): FaqItem {
   return { question: f.question[locale], answer: f.answer[locale] };
+}
+
+export function localizeTreePackage(p: RawTreePackage, locale: Locale): TreePackage {
+  return { ...p, name: p.name[locale], tag: p.tag[locale], blurb: p.blurb[locale] };
 }
 
 export const farms: RawFarm[] = [
@@ -618,3 +628,118 @@ export const trustStats = {
   customers: 3150,
   farmPartners: 42,
 };
+
+export const treePackages: RawTreePackage[] = [
+  {
+    id: "pkg-1",
+    slug: "single-tree",
+    name: { en: "Single tree", ru: "Одно дерево", uz: "Bitta daraxt" },
+    quantity: 1,
+    tag: { en: "STARTER", ru: "СТАРТ", uz: "BOSHLANG'ICH" },
+    blurb: {
+      en: "One Paulownia seedling, geo-tagged, eight years of care.",
+      ru: "Один саженец павловнии с геометкой и восемью годами ухода.",
+      uz: "Bitta pavlovniya ko'chati, geo-belgilangan, sakkiz yillik parvarish bilan.",
+    },
+    priceSom: 499000,
+    returnLowUsd: 200,
+    returnHighUsd: 600,
+    stockLabel: "1 240 left",
+  },
+  {
+    id: "pkg-2",
+    slug: "grove-of-5",
+    name: { en: "Grove of 5", ru: "Роща из 5", uz: "5 talik bog'" },
+    quantity: 5,
+    tag: { en: "POPULAR", ru: "ПОПУЛЯРНО", uz: "OMMABOP" },
+    blurb: {
+      en: "Five trees in one plot. Quarterly photo report per tree.",
+      ru: "Пять деревьев на одном участке. Ежеквартальный фотоотчёт по каждому дереву.",
+      uz: "Bitta uchastkada beshta daraxt. Har bir daraxt uchun choraklik foto hisobot.",
+    },
+    priceSom: 2495000,
+    returnLowUsd: 1000,
+    returnHighUsd: 3000,
+    stockLabel: "310 sets",
+  },
+  {
+    id: "pkg-3",
+    slug: "grove-of-20",
+    name: { en: "Grove of 20", ru: "Роща из 20", uz: "20 talik bog'" },
+    quantity: 20,
+    tag: { en: "", ru: "", uz: "" },
+    blurb: {
+      en: "Named plot, annual site visit, priority harvest slot.",
+      ru: "Именной участок, ежегодный визит на место, приоритет при сборе урожая.",
+      uz: "Nomli uchastka, yillik joyga tashrif, ustuvor hosil yig'ish navbati.",
+    },
+    priceSom: 9980000,
+    returnLowUsd: 4000,
+    returnHighUsd: 12000,
+    stockLabel: "48 sets",
+  },
+  {
+    id: "pkg-4",
+    slug: "gift-tree",
+    name: { en: "Gift tree", ru: "Дерево в подарок", uz: "Sovg'a daraxt" },
+    quantity: 1,
+    tag: { en: "GIFT", ru: "ПОДАРОК", uz: "SOVG'A" },
+    blurb: {
+      en: "Planted in someone else's name with a printed certificate.",
+      ru: "Посажено на чужое имя с печатным сертификатом.",
+      uz: "Boshqa birov nomiga ekiladi, bosma sertifikat bilan.",
+    },
+    priceSom: 499000,
+    returnLowUsd: 200,
+    returnHighUsd: 600,
+    stockLabel: "Always",
+  },
+];
+
+/**
+ * Demo Grove/order/review content for local (no-Supabase) development, so the
+ * account-gated pages (Grove, order history, reviews) have something to show.
+ * Real deployments read this from Supabase once a customer is authenticated.
+ */
+export const mockTrees: Tree[] = [
+  { id: "tree-1", code: "NH-1042", plot: "J-14", plantedAt: "2025-04-01", heightCm: 410, girthCm: 14, stage: "sapling", harvestEstimateDate: "2032-09-01", co2KgTarget: 500 },
+  { id: "tree-2", code: "NH-1043", plot: "J-14", plantedAt: "2025-04-01", heightCm: 380, girthCm: 13, stage: "sapling", harvestEstimateDate: "2032-09-01", co2KgTarget: 500 },
+  { id: "tree-3", code: "NH-1044", plot: "J-14", plantedAt: "2025-04-01", heightCm: 350, girthCm: 12, stage: "sapling", harvestEstimateDate: "2032-09-01", co2KgTarget: 500 },
+  { id: "tree-4", code: "NH-1088", plot: "J-14", plantedAt: "2026-03-01", heightCm: 120, girthCm: 6, stage: "seedling", harvestEstimateDate: "2033-09-01", co2KgTarget: 500 },
+];
+
+export const mockTreeCareLog: Record<string, TreeCareLogEntry[]> = {
+  "tree-1": [
+    { id: "log-1", loggedAt: "2026-08-18", note: "Foliar feed applied, height measured at 4.1 m." },
+    { id: "log-2", loggedAt: "2026-07-02", note: "Drip line replaced on row 6. Irrigation raised to 3×/week." },
+    { id: "log-3", loggedAt: "2026-05-14", note: "Formative pruning: two lower branches removed for trunk quality." },
+    { id: "log-4", loggedAt: "2026-03-21", note: "Spring soil test — nitrogen slightly low, amended with compost." },
+  ],
+};
+
+export const mockOrders: Order[] = [
+  {
+    id: "NH-20260814-092",
+    status: "in_transit",
+    paymentStatus: "paid",
+    totalSom: 143000,
+    createdAt: "2026-08-14T11:04:00Z",
+    items: [
+      { itemType: "product", productId: "p-5", treePackageId: null, name: "Potted Tulip Set (6 pots)", quantity: 1, unitPriceSom: 98000 },
+      { itemType: "product", productId: "p-11", treePackageId: null, name: "Succulent Trio Set", quantity: 1, unitPriceSom: 68000 },
+    ],
+  },
+  {
+    id: "NH-20260622-441",
+    status: "delivered",
+    paymentStatus: "paid",
+    totalSom: 240000,
+    createdAt: "2026-06-22T09:00:00Z",
+    items: [{ itemType: "product", productId: "p-7", treePackageId: null, name: "Grafted Apple Sapling", quantity: 1, unitPriceSom: 185000 }],
+  },
+];
+
+export const mockProductReviews: ProductReview[] = [
+  { id: "rev-1", productId: "p-4", rating: 5, body: "Arrived in perfect shape, packed with damp moss. Already budding two weeks later.", createdAt: "2026-06-01", reviewerName: "Aziza R." },
+  { id: "rev-2", productId: "p-4", rating: 4, body: "Healthy plant, delivery was a day late. Farm answered my questions in the chat quickly.", createdAt: "2026-05-20", reviewerName: "Bekzod T." },
+];

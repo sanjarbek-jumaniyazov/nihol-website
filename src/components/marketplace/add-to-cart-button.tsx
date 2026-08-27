@@ -13,7 +13,7 @@ export function AddToCartButton({ productId, inStock }: { productId: string; inS
   const dict = getDictionary(useLocale()).marketplace;
 
   function handleClick() {
-    addItem(productId, 1);
+    addItem("product", productId, 1);
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
   }

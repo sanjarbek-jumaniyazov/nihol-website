@@ -82,7 +82,114 @@ export interface RawFaqItem {
   answer: Localized;
 }
 
-export interface CartLine {
-  productId: string;
+/** A cart line is either a marketplace product or a Paulownia tree package. */
+export type CartLine =
+  | { kind: "product"; id: string; quantity: number }
+  | { kind: "tree_package"; id: string; quantity: number };
+
+export interface TreePackage {
+  id: string;
+  slug: string;
+  name: string;
   quantity: number;
+  tag: string;
+  blurb: string;
+  priceSom: number;
+  returnLowUsd: number;
+  returnHighUsd: number;
+  stockLabel: string;
+  imageUrl?: string;
+}
+
+export interface RawTreePackage extends Omit<TreePackage, "name" | "tag" | "blurb"> {
+  name: Localized;
+  tag: Localized;
+  blurb: Localized;
+}
+
+export type TreeStage = "seedling" | "sapling" | "maturing" | "harvest_ready";
+
+export interface Tree {
+  id: string;
+  code: string;
+  plot: string;
+  plantedAt: string;
+  heightCm: number;
+  girthCm: number;
+  stage: TreeStage;
+  harvestEstimateDate: string | null;
+  co2KgTarget: number;
+}
+
+export interface TreeCareLogEntry {
+  id: string;
+  loggedAt: string;
+  note: string;
+}
+
+export interface Address {
+  id: string;
+  label: string;
+  line: string;
+  city: string;
+  isDefault: boolean;
+}
+
+export type PaymentProvider = "payme" | "click" | "card";
+
+export interface PaymentMethodLabel {
+  id: string;
+  provider: PaymentProvider;
+  label: string;
+  meta: string;
+  isDefault: boolean;
+}
+
+export interface ProductReview {
+  id: string;
+  productId: string;
+  rating: number;
+  body: string;
+  createdAt: string;
+  reviewerName: string;
+}
+
+export interface NotificationPreferences {
+  growth: boolean;
+  milestones: boolean;
+  payments: boolean;
+  delivery: boolean;
+  promos: boolean;
+}
+
+export interface SavedProduct {
+  productId: string;
+}
+
+export type OrderStatus = "placed" | "packed" | "in_transit" | "out_for_delivery" | "delivered";
+export type PaymentStatus = "pending" | "paid" | "failed" | "refunded";
+
+export interface OrderLineItem {
+  itemType: "product" | "tree_package";
+  productId: string | null;
+  treePackageId: string | null;
+  name: string;
+  quantity: number;
+  unitPriceSom: number;
+}
+
+export interface Order {
+  id: string;
+  status: OrderStatus;
+  paymentStatus: PaymentStatus;
+  totalSom: number;
+  createdAt: string;
+  items: OrderLineItem[];
+}
+
+export interface OrderTrackingStep {
+  status: OrderStatus;
+  label: string;
+  at: string | null;
+  done: boolean;
 }

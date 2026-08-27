@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X, Leaf } from "lucide-react";
+import { Menu, X, Leaf, User } from "lucide-react";
 import { Link } from "@/components/ui/localized-link";
 import { CartBadge } from "./cart-badge";
 import { LanguageSwitcher } from "./language-switcher";
@@ -14,6 +14,7 @@ export default function Header({ dict }: { dict: Dictionary }) {
   const NAV_LINKS = [
     { href: "/paulownia", label: dict.nav.paulownia },
     { href: "/marketplace", label: dict.nav.marketplace },
+    { href: "/grove", label: dict.nav.grove },
     { href: "/about", label: dict.nav.about },
     { href: "/contact", label: dict.nav.contact },
   ];
@@ -40,6 +41,9 @@ export default function Header({ dict }: { dict: Dictionary }) {
 
         <div className="hidden items-center gap-4 md:flex">
           <LanguageSwitcher />
+          <Link href="/account" aria-label={dict.nav.account} className="text-primary-900 hover:text-primary-700">
+            <User className="h-5 w-5" />
+          </Link>
           <Link href="/cart" aria-label={dict.nav.viewCart} className="text-primary-900 hover:text-primary-700">
             <CartBadge />
           </Link>

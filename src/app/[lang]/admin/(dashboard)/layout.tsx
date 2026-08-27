@@ -1,6 +1,6 @@
 import { Link } from "@/components/ui/localized-link";
 import { redirect } from "next/navigation";
-import { LayoutDashboard, Sprout, ShoppingBag, MessageSquare, Leaf } from "lucide-react";
+import { LayoutDashboard, ShoppingBag, MessageSquare, Leaf } from "lucide-react";
 import { SignOutButton } from "@/components/admin/sign-out-button";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { isSupabaseConfigured, createClient } from "@/lib/supabase/server";
@@ -29,7 +29,6 @@ export default async function AdminDashboardLayout({
 
   const NAV = [
     { href: "/admin", label: dict.nav.overview, icon: LayoutDashboard },
-    { href: "/admin/inquiries", label: dict.nav.inquiries, icon: Sprout },
     { href: "/admin/orders", label: dict.nav.orders, icon: ShoppingBag },
     { href: "/admin/contact", label: dict.nav.contact, icon: MessageSquare },
   ];

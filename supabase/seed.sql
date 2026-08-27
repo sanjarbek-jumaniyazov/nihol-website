@@ -23,3 +23,11 @@ insert into products (slug, farm_id, name, category, price_som, description, car
   ('ceramic-planter-set', (select id from farms where slug = 'greenhouse-collective'), 'Ceramic Planter Set (3 sizes)', 'supplies', 89000, 'A stackable set of three glazed ceramic planters.', 'Hand wash; not dishwasher safe.', true, 4.8, 47),
   ('organic-potting-soil', (select id from farms where slug = 'greenhouse-collective'), 'Organic Potting Soil (20L)', 'supplies', 42000, 'Peat-free organic potting mix.', 'Store in a cool, dry place.', true, 4.6, 61)
 on conflict (slug) do nothing;
+
+-- Paulownia packages: quantity × 499,000 SOM per tree.
+insert into tree_packages (slug, name, quantity, tag, blurb, price_som, return_low_usd, return_high_usd, stock_label, sort_order) values
+  ('single-tree', 'Single tree', 1, 'STARTER', 'One Paulownia seedling, geo-tagged, eight years of care.', 499000, 200, 600, '1 240 left', 1),
+  ('grove-of-5', 'Grove of 5', 5, 'POPULAR', 'Five trees in one plot. Quarterly photo report per tree.', 2495000, 1000, 3000, '310 sets', 2),
+  ('grove-of-20', 'Grove of 20', 20, '', 'Named plot, annual site visit, priority harvest slot.', 9980000, 4000, 12000, '48 sets', 3),
+  ('gift-tree', 'Gift tree', 1, 'GIFT', 'Planted in someone else''s name with a printed certificate.', 499000, 200, 600, 'Always', 4)
+on conflict (slug) do nothing;

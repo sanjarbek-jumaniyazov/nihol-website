@@ -1,23 +1,31 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import { Lora, Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import BottomTabBar from "@/components/layout/bottom-tab-bar";
 import { locales, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { LocaleProvider } from "@/i18n/locale-context";
 import "../globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
   display: "swap",
 });
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const lora = Lora({
+  variable: "--font-lora",
   subsets: ["latin"],
   display: "swap",
-  axes: ["opsz"],
+  style: ["normal", "italic"],
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-ibm-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
 });
 
 export async function generateStaticParams() {
@@ -77,13 +85,14 @@ export default async function RootLayout({
   return (
     <html
       lang={lang}
-      className={`${inter.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${plusJakartaSans.variable} ${lora.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
+      <body className="min-h-full flex flex-col bg-background-outer text-foreground font-sans">
         <LocaleProvider locale={lang}>
           <Header dict={dict} />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 pb-20 md:pb-0">{children}</main>
           <Footer dict={dict} />
+          <BottomTabBar dict={dict} />
         </LocaleProvider>
       </body>
     </html>

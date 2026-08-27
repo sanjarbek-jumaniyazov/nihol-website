@@ -6,10 +6,11 @@ import { PlaceholderImage } from "@/components/ui/placeholder-image";
 import { StarRating } from "@/components/ui/star-rating";
 import { ProductCard } from "@/components/marketplace/product-card";
 import { AddToCartButton } from "@/components/marketplace/add-to-cart-button";
+import { SaveToggleButton } from "@/components/marketplace/save-toggle-button";
 import { PRODUCT_CATEGORIES } from "@/lib/types";
 import { PRODUCT_IMAGES, FARM_IMAGES } from "@/lib/images";
 import { formatSom } from "@/lib/utils";
-import { getFarmById, getProductBySlug, getProducts, getRelatedProducts } from "@/lib/data";
+import { getFarmById, getProductBySlug, getProducts, getRelatedProducts, getProductReviews } from "@/lib/data";
 import { getDictionary } from "@/i18n/dictionaries";
 import { locales, type Locale } from "@/i18n/config";
 
@@ -43,9 +44,10 @@ export default async function ProductPage({
   const product = await getProductBySlug(slug, lang);
   if (!product) notFound();
 
-  const [related, productFarm] = await Promise.all([
+  const [related, productFarm, reviews] = await Promise.all([
     getRelatedProducts(product, lang),
     getFarmById(product.farmId, lang),
+    getProductReviews(product.id),
   ]);
 
   const category = PRODUCT_CATEGORIES.find((c) => c.value === product.category);
@@ -86,8 +88,9 @@ export default async function ProductPage({
             <p className="mt-1 text-sm text-primary-800/80">{product.careInstructions}</p>
           </div>
 
-          <div className="mt-8">
+          <div className="mt-8 flex items-center gap-3">
             <AddToCartButton productId={product.id} inStock={product.inStock} />
+            <SaveToggleButton productId={product.id} className="!bg-primary-50 !h-11 !w-11" />
           </div>
 
           {productFarm && (
@@ -110,6 +113,23 @@ export default async function ProductPage({
           )}
         </div>
       </div>
+
+      {reviews.length > 0 && (
+        <div className="mt-14">
+          <h2 className="font-mono text-xs font-semibold uppercase tracking-widest text-label">Recent reviews</h2>
+          <div className="mt-4 space-y-3">
+            {reviews.map((r) => (
+              <div key={r.id} className="rounded-2xl bg-panel-alt p-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-semibold text-ink">{r.reviewerName}</span>
+                  <span className="font-mono text-xs text-accent-500">{"★".repeat(r.rating)}</span>
+                </div>
+                <p className="mt-1.5 text-sm text-ink/80">{r.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {related.length > 0 && (
         <div className="mt-16">

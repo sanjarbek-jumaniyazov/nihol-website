@@ -1,6 +1,7 @@
 import { Link } from "@/components/ui/localized-link";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
 import { StarRating } from "@/components/ui/star-rating";
+import { SaveToggleButton } from "@/components/marketplace/save-toggle-button";
 import { PRODUCT_CATEGORIES } from "@/lib/types";
 import { PRODUCT_IMAGES } from "@/lib/images";
 import { formatSom } from "@/lib/utils";
@@ -36,6 +37,7 @@ export function ProductCard({
             {dict.outOfStock}
           </span>
         )}
+        <SaveToggleButton productId={product.id} className="absolute right-2.5 top-2.5" />
       </div>
       <div className="p-4">
         <p className="text-xs font-medium uppercase tracking-wide text-primary-600">
