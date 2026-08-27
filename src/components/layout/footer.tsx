@@ -1,5 +1,6 @@
-import { Leaf, Mail, Phone, MessageCircle } from "lucide-react";
+import { Mail, Phone, MessageCircle } from "lucide-react";
 import { Link } from "@/components/ui/localized-link";
+import { Logo } from "@/components/ui/logo";
 import type { Dictionary } from "@/i18n/dictionaries";
 
 export default function Footer({ dict }: { dict: Dictionary }) {
@@ -8,7 +9,7 @@ export default function Footer({ dict }: { dict: Dictionary }) {
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-14 sm:px-6 md:grid-cols-4 lg:px-8">
         <div>
           <div className="flex items-center gap-2 font-serif text-xl font-semibold text-white">
-            <Leaf className="h-6 w-6 text-primary-300" />
+            <Logo size={32} />
             Nihol
           </div>
           <p className="mt-3 text-sm text-primary-200">{dict.footer.tagline}</p>

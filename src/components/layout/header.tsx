@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X, Leaf, User } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 import { Link } from "@/components/ui/localized-link";
+import { Logo } from "@/components/ui/logo";
 import { CartBadge } from "./cart-badge";
 import { LanguageSwitcher } from "./language-switcher";
 import { LinkButton } from "@/components/ui/button";
@@ -23,7 +24,7 @@ export default function Header({ dict }: { dict: Dictionary }) {
     <header className="sticky top-0 z-50 border-b border-primary-100 bg-background/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2 font-serif text-xl font-semibold text-primary-900">
-          <Leaf className="h-6 w-6 text-primary-600" strokeWidth={2} />
+          <Logo size={32} />
           Nihol
         </Link>
 

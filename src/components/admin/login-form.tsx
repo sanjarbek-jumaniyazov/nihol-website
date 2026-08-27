@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Leaf } from "lucide-react";
+import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 import { useLocaleRouter } from "@/i18n/use-locale-router";
@@ -42,7 +42,7 @@ export function AdminLoginForm({ dict }: { dict: Dictionary["admin"] }) {
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-primary-50/60 px-4">
       <div className="w-full max-w-sm rounded-2xl border border-primary-100 bg-white p-8 shadow-sm">
         <div className="flex items-center gap-2 font-serif text-xl font-semibold text-primary-900">
-          <Leaf className="h-6 w-6 text-primary-600" />
+          <Logo size={32} />
           {t.title}
         </div>
         <p className="mt-2 text-sm text-primary-800/70">{t.subtitle}</p>

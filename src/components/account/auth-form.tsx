@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Leaf } from "lucide-react";
+import { Logo } from "@/components/ui/logo";
 import { Link } from "@/components/ui/localized-link";
 import { Button } from "@/components/ui/button";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
@@ -57,7 +57,7 @@ export function AccountAuthForm({ mode, dict }: { mode: "login" | "signup"; dict
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-panel px-4 py-14">
       <div className="w-full max-w-sm rounded-2xl border border-hairline bg-white p-8">
         <div className="flex items-center gap-2 font-serif text-xl text-primary-800">
-          <Leaf className="h-6 w-6 text-primary-600" />
+          <Logo size={32} />
           {mode === "signup" ? t.signupTitle : t.loginTitle}
         </div>
         <p className="mt-2 text-sm text-muted">{mode === "signup" ? t.signupSubtitle : t.loginSubtitle}</p>

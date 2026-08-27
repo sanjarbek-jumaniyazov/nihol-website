@@ -1,8 +1,9 @@
 import { Link } from "@/components/ui/localized-link";
 import { redirect } from "next/navigation";
-import { LayoutDashboard, ShoppingBag, MessageSquare, Leaf } from "lucide-react";
+import { LayoutDashboard, ShoppingBag, MessageSquare } from "lucide-react";
 import { SignOutButton } from "@/components/admin/sign-out-button";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import { Logo } from "@/components/ui/logo";
 import { isSupabaseConfigured, createClient } from "@/lib/supabase/server";
 import { isAdminEmail } from "@/lib/admin";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -37,7 +38,7 @@ export default async function AdminDashboardLayout({
     <div className="flex min-h-[calc(100vh-4rem)]">
       <aside className="flex w-64 flex-shrink-0 flex-col bg-primary-950 text-white">
         <div className="flex items-center gap-2 px-6 py-6 font-serif text-lg font-semibold">
-          <Leaf className="h-5 w-5 text-primary-300" /> {dict.brand}
+          <Logo size={24} /> {dict.brand}
         </div>
         <nav className="flex-1 space-y-1 px-3">
           {NAV.map((item) => (
